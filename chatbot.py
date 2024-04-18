@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer
 from PIL import Image
 import io
@@ -16,31 +16,39 @@ users = {
 
 rounds = 3
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 def chatbot():
-    data = request.get_json()
-    user_input = data['user_input']
-    user_id = data['user_id']
+    prompt = "How much is 2 + 3?"
+    output = text_generator(prompt, max_length=50, do_sample=True, top_k=90, top_p=0.55, num_return_sequences=1)
+    return jsonify({"response": output[0]['generated_text']})
 
-    if "meme3M" in user_input:
-        return jsonify({"response": "Vuoi giocare al meme3M? Inserisci una foto per iniziare!"})
-    elif "Inserisci una foto per iniziare!" in user_input:
-        image_file = request.files['image']
-        image = Image.open(io.BytesIO(image_file.read()))
-        meme_image = create_meme(image)
-        meme_image.save('meme.jpg')
-        return jsonify({"response": "Ecco il tuo meme!"})
-    elif "Vota il meme" in user_input:
-        vote = data['vote']
-        if user_id == 'user1':
-            users['user1']['score'] += vote
-        elif user_id == 'user2':
-            users['user2']['score'] += vote
-        return jsonify({"response": "Voto registrato!"})
-    else:
-        prompt = user_input
-        output = text_generator(prompt, max_length=50, do_sample=True, top_k=50, top_p=0.95, num_return_sequences=1)
-        return jsonify({"response": output[0]['generated_text']})
+    # data = request.get_json()
+    # user_input = data['user_input']
+    # user_id = data['user_id']
+
+    # prompt = user_input
+    # output = text_generator(prompt, max_length=50, do_sample=True, top_k=50, top_p=0.95, num_return_sequences=1)
+    # return jsonify({"response": output[0]['generated_text']})
+
+    # if "meme3M" in user_input:
+    #     return jsonify({"response": "Vuoi giocare al meme3M? Inserisci una foto per iniziare"})
+    # elif "Inserisci una foto per iniziare!" in user_input:
+    #     image_file = request.files['image']
+    #     image = Image.open(io.BytesIO(image_file.read()))
+    #     meme_image = create_meme(image)
+    #     meme_image.save('meme.jpg')
+    #     return jsonify({"response": "Ecco il tuo meme"})
+    # elif "Vota il meme" in user_input:
+    #     vote = data['vote']
+    #     if user_id == 'user1':
+    #         users['user1']['score'] += vote
+    #     elif user_id == 'user2':
+    #         users['user2']['score'] += vote
+    #     return jsonify({"response": "Voto registrato"})
+    # else:
+    #     prompt = user_input
+    #     output = text_generator(prompt, max_length=50, do_sample=True, top_k=50, top_p=0.95, num_return_sequences=1)
+    #     return jsonify({"response": output[0]['generated_text']})
 
 def create_meme(image):
     #Funzione per manipolare l'immagine e creare il meme
@@ -56,5 +64,16 @@ def check_winner():
             return "draw"
     return None
 
+@app.route('/images')
+def show_images():
+    #Funzione per mostrare le immagini dei meme
+    return render_template('immmagini.html')
+
+@app.route('/test')
+def dfsdfsdfs():
+    #Funzione per mostrare le immagini dei meme
+    return render_template('test.html')
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=4674)

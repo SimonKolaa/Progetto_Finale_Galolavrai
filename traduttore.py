@@ -4,14 +4,14 @@ import random
 app = Flask(__name__)
 
 traduzioni_personalizzate = {
-    "qiva nanen": "ti scopo la mamma",
+    "qiva nanen": "cives",
     "galo king": "non bisogna tradurre",  
     "galo": "king di mondaino",
     "mondaino": "capitale",
     "alberti": "non sarà mai come il galo", 
     "mafia,": "sei a mondaino",
     "civet": "qiva robt", "al"
-    "qiva robt": "Ti scopo la famiglia",
+    "qiva robt": "cives",
     "c'amma fa?": "facciamo a mani",
     "ammò": "fratello" ,
     "t dev veng a piglià?": "devo venire a schiattarti?",

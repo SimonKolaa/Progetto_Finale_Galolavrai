@@ -21,6 +21,7 @@ Prima di iniziare, assicurati di avere i file necessari. Li linkerò direttament
 ## 📦 Step 2: Installa i Moduli 📦
 
 Usa `pip` per installare i seguenti moduli Python all'interno del tuo venv:
+(oppure file requirements.txt)
 
 ```bash
 pip install flask

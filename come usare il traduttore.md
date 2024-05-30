@@ -1,5 +1,5 @@
 
-#  Traduttore Galo: Guida (ho lavorato come un negro, come chiedi sempre)
+#  Traduttore Galo: Guida 
 
 **Creato da Simon Kola**
 
